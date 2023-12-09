@@ -18,12 +18,43 @@
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
-import {Socket} from "phoenix"
-import {LiveSocket} from "phoenix_live_view"
+import { Socket } from "phoenix"
+import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
+import hljs from "highlight.js"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let Hooks = {};
+
+Hooks.Highlight = {
+    mounted() {
+        let name = this.el.getAttribute("data-name");
+        let codeBlock = this.el.querySelector("pre code");
+        if (name && codeBlock) {
+            codeBlock.className = codeBlock.className.replace(/language-\$+/g, "");
+            codeBlock.classList.add(`language-${this.getSyntaxType(name)}`)
+            hljs.highlightElement(codeBlock);
+        }
+    },
+
+    getSyntaxType(name) {
+        let extension = name.split(".").pop();
+        switch (extension) {
+            case "txt":
+                return "text"
+            case "json":
+                return "json"
+            case "html":
+                return "html"
+            case "heex":
+                return "html"
+            case "js":
+                return "javasctript"
+            default:
+                return "elixir";
+        }
+    }
+}
 
 Hooks.UpdateLineNumbers = {
     mounted() {
@@ -38,7 +69,7 @@ Hooks.UpdateLineNumbers = {
         })
 
         this.el.addEventListener("keydown", (e) => {
-            if(e.key == "Tab"){
+            if (e.key == "Tab") {
                 e.preventDefault();
                 var start = this.el.selectionStart;
                 var end = this.el.selectionEnd;
@@ -53,21 +84,21 @@ Hooks.UpdateLineNumbers = {
         this.updateLineNumbers();
     },
 
-    updateLineNumbers(){
+    updateLineNumbers() {
         const lineNumberText = document.querySelector("#line-numbers")
-        if(!lineNumberText) return;
-        const lines = this.el.value.split("\n") 
-        const numbers = lines.map((_, index) => index + 1 ).join("\n") + "\n"
+        if (!lineNumberText) return;
+        const lines = this.el.value.split("\n")
+        const numbers = lines.map((_, index) => index + 1).join("\n") + "\n"
         lineNumberText.value = numbers;
     }
 };
 
 
 
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
+let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: Hooks })
 
 // Show progress bar on live navigation and form submits
-topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
+topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 

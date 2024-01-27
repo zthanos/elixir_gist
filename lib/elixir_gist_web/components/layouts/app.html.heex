@@ -3,9 +3,11 @@
     <a href={~p"/"}>
       <img src="/images/gist-logo.svg" alt="logo" class="h-8 w-auto" />
     </a>
+
     <a href={~p"/"} class="mr-6">
       <div class="text-white font-brand font-bold text-3xl">Gist</div>
     </a>
+
     <div>
       <input
         type="text"
@@ -20,10 +22,17 @@
       </button>
     </div>
   </div>
+
   <div class="relative">
-    <button class="img-down-arrow" type="button" id="user-menu-button" phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}>
+    <button
+      class="img-down-arrow"
+      type="button"
+      id="user-menu-button"
+      phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
+    >
       <img src="/images/user-image.svg" alt="Profile Image" class="round-image-padding  h-8 w-8" />
     </button>
+
     <div
       id="dropdown-menu"
       phx-click-away={ElixirGistWeb.Layouts.App.toggle_dropdown_menu()}
@@ -41,7 +50,8 @@
         >
           Signed in as <%= @current_user.email %>
         </.link>
-                <.link
+
+        <.link
           href="#"
           class="menu-item "
           role="menuItem"
@@ -51,7 +61,8 @@
         >
           Your gists
         </.link>
-                <.link
+
+        <.link
           href="#"
           class="menu-item border-b border-white border-opacity-50"
           role="menuItem"
@@ -61,7 +72,8 @@
         >
           Saved gists
         </.link>
-                <.link
+
+        <.link
           href={~p"/users/log_out"}
           class="menu-item"
           role="menuItem"
@@ -82,6 +94,7 @@
         >
           Sign in
         </.link>
+
         <.link
           href={~p"/users/register"}
           class="menu-item"
@@ -98,23 +111,22 @@
 </header>
 
 <main>
-  <.flash_group flash={@flash} />
-  <%= @inner_content %>
+  <.flash_group flash={@flash} /> <%= @inner_content %>
 </main>
+
 <footer class="h-[120px] w-full flex justify-center text-white px-16 py-20 font-brand font-regular text-xs">
   <div class="w-full px-10 ">
     <div class="border-t-[1px] border-white w-full"></div>
-      <div class="flex items-center space-x-2 py-6">
-        <img src="/images/em-logo.svg" alt="Elixir mentor logo" class="h-8 w-8"/>
-        <p>© 2023 Elixir Mentor</p>
-        <div class="text-emLavender-dark px-4 space-x-2">
-          <a href={~p"/"} class="hover:underline">Terms</a>
-          <a href={~p"/"} class="hover:underline">Privacy</a>
-          <a href={~p"/"} class="hover:underline">About</a>
-        </div>
-        
+
+    <div class="flex items-center space-x-2 py-6">
+      <img src="/images/em-logo.svg" alt="Elixir mentor logo" class="h-8 w-8" />
+      <p>© 2023 Elixir Mentor</p>
+
+      <div class="text-emLavender-dark px-4 space-x-2">
+        <a href={~p"/"} class="hover:underline">Terms</a>
+        <a href={~p"/"} class="hover:underline">Privacy</a>
+        <a href={~p"/"} class="hover:underline">About</a>
       </div>
-
+    </div>
   </div>
-
 </footer>

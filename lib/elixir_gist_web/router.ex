@@ -3,7 +3,6 @@ defmodule ElixirGistWeb.Router do
 
   import ElixirGistWeb.UserAuth
 
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session

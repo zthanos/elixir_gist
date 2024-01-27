@@ -20,7 +20,7 @@ defmodule ElixirGistWeb.CreateGistLive do
       {:ok, gist} ->
         socket = push_event(socket, "clear-textareas", %{})
         changeset = Gists.change_gist(%Gist{})
-        socket =  assign(socket, :form, to_form(changeset))
+        socket = assign(socket, :form, to_form(changeset))
         {:noreply, push_navigate(socket, to: ~p"/gist?#{[id: gist]}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
